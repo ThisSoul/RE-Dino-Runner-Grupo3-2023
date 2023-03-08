@@ -60,7 +60,7 @@ class Dino(Sprite):
           self.image = DUCKING [1]
 
        self.dino_rect.x = self.X_POS
-       self.dino_rect.y = 345
+       self.dino_rect.y = self.Y_POS + 35
        self.step_index += 1
        self.dino_duck = False
        
