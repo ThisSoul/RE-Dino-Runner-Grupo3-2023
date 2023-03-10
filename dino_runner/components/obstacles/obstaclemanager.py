@@ -7,6 +7,7 @@ from dino_runner.utils.constants import BIRD, LARGE_CACTUS, SMALL_CACTUS
 class ObstacleManager:
     def __init__(self):
         self.obstacles = []
+
     def update(self, game):
         if len(self.obstacles) == 0:
            obstacle_type = random.randint(0,2)
@@ -18,12 +19,16 @@ class ObstacleManager:
                 self.obstacles.append(Bird(BIRD))
 
         for obstacle in self.obstacles:
-           obstacle.update(game.game_speed, self.obstacles)
-           if game.player.dino_rect.colliderect(obstacle.rect):
-              pygame.time.delay(1000)
-              game.playing = False
-              break 
-
+            obstacle.update(game.game_speed, self.obstacles)
+            if game.player.dino_rect.colliderect(obstacle.rect):
+                if not game.player.shield:
+                    pygame.time.delay(1000)
+                    game.death_count +=1
+                    game.playing = False
+                    break
+                else:
+                    self.obstacles.remove(obstacle)
+                    
     def draw(self, screen):
         for obstacle in self.obstacles:
             obstacle.draw(screen)
